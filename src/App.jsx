@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar";
 import Explore from "./pages/Explore";
 import SignIn from "./pages/SignIn";
@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </Router>
+      <ToastContainer hideProgressBar={true} />
     </>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -49,7 +50,7 @@ const SignUp = () => {
       await setDoc(doc(db, "users", user.uid), formDatCopy);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toast("Something went wrong");
     }
   };
   return (
