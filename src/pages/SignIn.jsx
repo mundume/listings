@@ -6,32 +6,32 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibiltyIcon from "../assets/svg/visibilityIcon.svg";
-
+//sign in function
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  //destructure form data
   const { email, password } = formData;
 
   const navigate = useNavigate();
+  //handle form input change
   const onChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
+  //firebase  function
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-
+      //firebase auth function which returns a promise
       const auth = getAuth();
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await //sign in function
+      signInWithEmailAndPassword(auth, email, password);
       if (userCredential.user) {
         navigate("/");
       }

@@ -12,6 +12,7 @@ import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRig
 import visibiltyIcon from "../assets/svg/visibilityIcon.svg";
 
 const SignUp = () => {
+  //
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -21,32 +22,35 @@ const SignUp = () => {
   const { name, email, password } = formData;
 
   const navigate = useNavigate();
+  //form inputs onchange state update
   const onChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
-
+  //firebase promise
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      //auth function from firebase which returns a promise
       const auth = getAuth();
       const userCredential = createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
+      //user
       const user = (await userCredential).user;
-
+      //update firebase profile
       updateProfile(auth.currentUser, {
         displayName: name,
       });
-
+      //add timestamps and remove password to the user object
       const formDatCopy = { ...formData };
       delete formDatCopy.password;
       formDatCopy.timestamp = serverTimestamp();
-
+      //save to firestore
       await setDoc(doc(db, "users", user.uid), formDatCopy);
       navigate("/");
     } catch (error) {

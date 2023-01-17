@@ -8,17 +8,20 @@ import { toast } from "react-toastify";
 const Profile = () => {
   const auth = getAuth();
   const [changeDetails, setchangeDetails] = useState(false);
+  //set the initial state as the current firebase details
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
   });
 
   const { name, email } = formData;
+  //redirect hook-react router
   const navigate = useNavigate();
   const onLogout = () => {
     auth.signOut();
     navigate("/");
   };
+  //update info firebase
   const onSubmit = async () => {
     try {
       if (auth.currentUser.displayName === name)
@@ -36,7 +39,7 @@ const Profile = () => {
       console.log(err);
     }
   };
-
+  //handle form input
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
