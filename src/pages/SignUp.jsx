@@ -10,6 +10,7 @@ import { db } from "../firebase.config";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibiltyIcon from "../assets/svg/visibilityIcon.svg";
+import Oauth from "../components/Oauth";
 
 const SignUp = () => {
   //
@@ -107,7 +108,7 @@ const SignUp = () => {
             </button>
           </div>
         </form>
-        {/* Googlr OAuth */}
+        <Oauth />
         <Link to="/sign-in" className="registerLink">
           Sign In instead
         </Link>

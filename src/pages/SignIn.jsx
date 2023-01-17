@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibiltyIcon from "../assets/svg/visibilityIcon.svg";
+import Oauth from "../components/Oauth";
 //sign in function
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -81,7 +82,7 @@ const SignIn = () => {
             </button>
           </div>
         </form>
-        {/* Googlr OAuth */}
+        <Oauth />
         <Link to="/sign-up" className="registerLink">
           Sign Up instead
         </Link>
