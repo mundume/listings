@@ -5,7 +5,6 @@ import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import googleIcon from "../assets/svg/googleIcon.svg";
-import { async } from "@firebase/util";
 
 const Oauth = () => {
   const onGoogleClick = async () => {
@@ -29,6 +28,7 @@ const Oauth = () => {
       }
       navigate("/");
     } catch (error) {
+      console.log(error);
       toast.error("Couldnt auth with google");
     }
   };
