@@ -17,11 +17,12 @@ const Profile = () => {
   const { name, email } = formData;
   //redirect hook-react router
   const navigate = useNavigate();
+  //logout function
   const onLogout = () => {
     auth.signOut();
     navigate("/");
   };
-  //update info firebase
+  //edit info
   const onSubmit = async () => {
     try {
       if (auth.currentUser.displayName === name)
