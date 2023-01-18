@@ -54,7 +54,31 @@ const CreateListings = () => {
     };
   }, [isMounted]);
   const onSubmit = (e) => e.preventDefault();
-  const onMutate = () => {};
+  const onMutate = (e) => {
+    let boolean = null;
+    if (e.target.value === "true") {
+      boolean = true;
+    }
+    if (e.target.value === "false") {
+      boolean = false;
+    }
+
+    //files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }));
+    }
+
+    //text/ booleans / numbers
+    if (!e.target.files) {
+      setFormData((prev) => ({
+        ...prev,
+        [e.target.id]: boolean ?? e.target.value,
+      }));
+    }
+  };
   if (loading) {
     return <Spinner />;
   }
@@ -261,8 +285,8 @@ const CreateListings = () => {
               <input
                 className="formInputSmall"
                 type="number"
-                id="discountedPrice"
-                value={discountedPrice}
+                id="discountedaPrice"
+                value={discountedaPrice}
                 onChange={onMutate}
                 min="50"
                 max="750000000"
