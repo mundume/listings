@@ -9,6 +9,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
 import Category from "./pages/Category";
+import CreateListings from "./pages/CreateListings";
 import PrivateRoutes from "./components/PrivateRoutes";
 
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
           <Route path="/profile" element={<PrivateRoutes />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
-
+          <Route path="/create-listing" element={<CreateListings />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
