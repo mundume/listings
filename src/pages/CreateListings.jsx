@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
 
 const CreateListings = () => {
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
@@ -33,6 +34,8 @@ const CreateListings = () => {
     parking,
     images,
     discountedaPrice,
+    latitude,
+    longitude,
   } = formData;
 
   const auth = getAuth();
@@ -53,7 +56,31 @@ const CreateListings = () => {
       isMounted.current = false;
     };
   }, [isMounted]);
-  const onSubmit = (e) => e.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (discountedaPrice >= regularPrice) {
+      setLoading(false);
+      toast.error("Discounted price needs to be less than the regular price");
+      return;
+    }
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("max number (6) of images reached");
+    }
+    let geolocation = {};
+    let location;
+    if (geolocationEnabled) {
+      if (location === undefined || location.includes("undefined")) {
+        setLoading(false);
+        toast.error("enter correct adress");
+      }
+    } else {
+      geolocation.lat = latitude;
+      geolocation.lng = longitude;
+      location = address;
+    }
+  };
   const onMutate = (e) => {
     let boolean = null;
     if (e.target.value === "true") {
