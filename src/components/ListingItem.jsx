@@ -5,6 +5,7 @@ import bedIcon from "../assets/svg/bedIcon.svg";
 import bathtubIcon from "../assets/svg/bathtubIcon.svg";
 
 const ListingItem = ({ listing, id, onDelete }) => {
+  console.log(listing.imageUrls);
   return (
     <li className="categoryListing">
       <Link
@@ -12,7 +13,7 @@ const ListingItem = ({ listing, id, onDelete }) => {
         className="categoryListingLink"
       >
         <img
-          src={listing.imageUrl[0]}
+          src={listing.imageUrls}
           alt={listing.name}
           className="categoryListingImg"
         />

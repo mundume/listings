@@ -7,6 +7,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
 import { useNavigate } from "react-router-dom";
@@ -74,7 +75,6 @@ const CreateListings = () => {
       throw new Error(
         `${discountedaPrice} is not supposed to be greater than ${regularPrice} `
       );
-      return;
     }
     if (images.length > 6) {
       setLoading(false);
@@ -83,7 +83,7 @@ const CreateListings = () => {
     let geolocation = {};
     let location;
     if (geolocationEnabled) {
-      if (address) {
+      if (!address) {
         setLoading(false);
         toast.error("enter correct adress");
       }
@@ -147,16 +147,35 @@ const CreateListings = () => {
         );
       });
     };
-    const imgUrls = await Promise.all(
+    const imageUrls = await Promise.all(
       [...images].map((image) => storeImage(image))
     ).catch(() => {
       setLoading(false);
       toast.error("Images not uploaded");
       return;
     });
-    console.log(imgUrls);
+
+    const formDataCopy = {
+      ...formData,
+      imageUrls,
+      geolocation,
+      timestamp: serverTimestamp(),
+      location: formData.address,
+    };
+    delete formDataCopy.images;
+
+    location && (formDataCopy.location = location);
+    !formDataCopy.offer && delete formDataCopy.discountedaPrice;
+
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+    console.log(docRef);
+
     setLoading(false);
+
+    toast.success("Listing saved");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   };
+
   const onMutate = (e) => {
     let boolean = null;
     if (e.target.value === "true") {
