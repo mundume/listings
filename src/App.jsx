@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import Category from "./pages/Category";
 import CreateListings from "./pages/CreateListings";
 import Listing from "./pages/Listing";
+import Contact from "./pages/Contact";
 import PrivateRoutes from "./components/PrivateRoutes";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
             path="/category/:categoryName/:listingId"
             element={<Listing />}
           />
+          <Route path="/contact/:landlordId" element={<Contact />} />
         </Routes>
       </Router>
       <ToastContainer hideProgressBar={true} />

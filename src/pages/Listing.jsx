@@ -5,6 +5,12 @@ import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
 import ShareIcon from "../assets/svg/shareIcon.svg";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const Listings = () => {
   const [listing, setListing] = useState(null);
@@ -35,7 +41,36 @@ const Listings = () => {
 
   return (
     <main>
-      {/* slider */}
+      <Swiper
+        // install Swiper modules
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
+      >
+        {listing.imageUrls.map((item, index) => (
+          <SwiperSlide>
+            <div className="swiperSlideDiv" key={index}>
+              <div
+                style={{
+                  background: `url(${listing.imageUrls[index]}) no-repeat`,
+                  backgroundSize: "cover",
+                }}
+              ></div>
+            </div>
+            <img
+              src={item}
+              alt=""
+              style={{ width: "full", objectFit: "fill" }}
+            />
+          </SwiperSlide>
+        ))}
+        ...
+      </Swiper>
       <div
         className="shareIconDiv"
         onClick={() => {
