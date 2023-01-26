@@ -10,6 +10,7 @@ import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
 import Category from "./pages/Category";
 import CreateListings from "./pages/CreateListings";
+import Listing from "./pages/Listing";
 import PrivateRoutes from "./components/PrivateRoutes";
 
 const App = () => {
@@ -28,6 +29,10 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route
+            path="/category/:categoryName/:listingId"
+            element={<Listing />}
+          />
         </Routes>
       </Router>
       <ToastContainer hideProgressBar={true} />
