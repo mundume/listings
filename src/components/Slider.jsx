@@ -42,6 +42,35 @@ export const Slider = () => {
   }
   console.log(listings);
 
-  return listings && <p className="text-4xl"> rentCategoryImage</p>;
+  return (
+    listings && (
+      <div>
+        <p className="text-4xl font-semibold">Recomended</p>
+        <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+          {listings.map(({ data, id }) => (
+            <SwiperSlide
+              key={id}
+              onClick={() => navigate(`/category/${data.type}/${id}`)}
+            >
+              <div className="relative">
+                <img
+                  src={data.imageUrls[0]}
+                  alt=""
+                  className="h-60 w-full  rounded object-cover"
+                />
+                <div className="absolute left-0 top-1/2 p-2 text-white bg-gray-900 opacity-70">
+                  <p className="text-lg font-bold ">{data.name}</p>
+                  <p className="tex-sm font-normal">{data.address}</p>
+                  <p className="tex-sm font-bold">
+                    $ {data.regularPrice} {data.type === "rent" && "/ month"}
+                  </p>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    )
+  );
 };
 export default Slider;

@@ -7,7 +7,7 @@ const Explore = () => {
   return (
     <div className="explore">
       <header>
-        <p className="pageHeader">Explore</p>
+        <p className="text-3xl font-extrabold">Explore</p>
       </header>
       <main>
         {/* slider */}
