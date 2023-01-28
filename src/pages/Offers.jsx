@@ -17,6 +17,7 @@ import ListingItem from "../components/ListingItem";
 const Offers = () => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const params = useParams();
   useEffect(() => {
@@ -33,6 +34,10 @@ const Offers = () => {
         );
         //execute query
         const querySnap = await getDocs(q);
+
+        const lastDoc = querySnap.docs[querySnap.docs.length - 1];
+        setLastFetchedListing(lastDoc);
+
         const listings = [];
         querySnap.forEach((doc) => {
           return listings.push({
@@ -49,6 +54,42 @@ const Offers = () => {
     };
     fetchListings();
   }, []);
+
+  const onFetchMoreListings = async () => {
+    try {
+      //get reference
+      const listingsRef = collection(db, "listings");
+      //create a query
+      const q = query(
+        listingsRef,
+        where("offer", "==", true),
+        orderBy("timestamp", "desc"),
+        startAfter(lastFetchedListing),
+        limit(10)
+      );
+      //execute query
+      const querySnap = await getDocs(q);
+
+      //get the last document
+      const lastDoc = querySnap.docs[querySnap.docs.length - 1];
+      setLastFetchedListing(lastDoc);
+      console.log(lastDoc);
+
+      const listings = [];
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+
+      setListings((prev) => [...prev, ...listings]);
+
+      setLoading(false);
+    } catch (error) {
+      toast.error("could not fetch listings");
+    }
+  };
   return (
     <div className="category">
       <header>
@@ -69,6 +110,14 @@ const Offers = () => {
               ))}
             </ul>
           </main>
+
+          <br />
+          <br />
+          {lastFetchedListing && (
+            <p onClick={onFetchMoreListings} className="loadMore">
+              Load More
+            </p>
+          )}
         </>
       ) : (
         <p>There are no current Offers</p>
