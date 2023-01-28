@@ -10,6 +10,7 @@ import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
 import Category from "./pages/Category";
 import CreateListings from "./pages/CreateListings";
+import EditListings from "./pages/EditListings";
 import Listing from "./pages/Listing";
 import Contact from "./pages/Contact";
 import PrivateRoutes from "./components/PrivateRoutes";
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/create-listing" element={<CreateListings />} />
+          <Route path="/edit-listing/:listingId" element={<EditListings />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
